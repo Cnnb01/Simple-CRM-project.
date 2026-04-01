@@ -3,7 +3,7 @@ from django.conf import settings #helps link to mangaer/agent
 
 # Create your models here.
 class Lead(models.Model):
-    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='leads')
     lead_name = models.CharField(max_length=100, null=False)
     email = models.EmailField()
     company_name = models.CharField(max_length=100, null=False)
@@ -13,7 +13,8 @@ class Lead(models.Model):
         return self.lead_name
     
 class Notes(models.Model):
-    lead = models.ForeignKey(Lead, on_delete=models.CASCADE)
+    lead = models.ForeignKey(Lead, on_delete=models.CASCADE, related_name='notes')
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -21,7 +22,8 @@ class Notes(models.Model):
         return f"Note for {self.lead.lead_name}"
 
 class Contact(models.Model):
-    lead = models.ForeignKey(Lead, on_delete=models.CASCADE)
+    lead = models.ForeignKey(Lead, on_delete=models.CASCADE, related_name='contacts')
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     phone_number = models.CharField(max_length=12)
     created_at = models.DateTimeField(auto_now_add=True)
 

@@ -41,3 +41,12 @@ class Contact(models.Model):
 
     def __str__(self):
         return f"Contact for {self.lead.lead_name}"
+    
+class Reminder(models.Model):
+    lead = models.ForeignKey(Lead, on_delete=models.CASCADE, related_name="reminders")
+    reminder_time = models.DateTimeField()
+    message = models.TextField()
+    is_sent = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"Reminder for {self.lead.lead_name} - {self.reminder_date}"

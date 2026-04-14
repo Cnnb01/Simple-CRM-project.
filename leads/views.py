@@ -9,7 +9,6 @@ from django_filters.rest_framework import DjangoFilterBackend
 # agents to leads get, post(RetrieveUpdateAPIView)
 # leads
 class LeadListCreate(generics.ListCreateAPIView):
-    queryset = Lead.objects.all()
     serializer_class = LeadSerializer
     permission_classes= [permissions.IsAuthenticated]
 
@@ -23,53 +22,93 @@ class LeadListCreate(generics.ListCreateAPIView):
     # 3 ordering/sorting[specify which fields a user is allowed to sort the results by using the ?ordering=]
     ordering_fields = ['created_at', 'lead_name']
 
+    def get_queryset(self):
+        user = self.request.user
+        if user.role == 'manager':
+            return Lead.objects.all()
+        return Lead.objects.filter(created_by=user)
+
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
 
 class LeadDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Lead.objects.all()
     serializer_class = LeadSerializer
     permission_classes = [IsManagerOrReadOnly]
 
+    def get_queryset(self):
+        user = self.request.user
+        if user.role == 'manager':
+            return Lead.objects.all()
+        return Lead.objects.filter(created_by=user)
+
 # notes
 class NoteListCreate(generics.ListCreateAPIView):
-    queryset = Notes.objects.all()
     serializer_class = NotesSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.role == 'manager':
+            return Notes.objects.all()
+        return Notes.objects.filter(lead__created_by=user)
 
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
 
 class NotesDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Notes.objects.all()
     serializer_class = NotesSerializer
     permission_classes = [IsManagerOrReadOnly]
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.role == 'manager':
+            return Notes.objects.all()
+        return Notes.objects.filter(lead__created_by=user)
 
 
 # contacts
 class ContactListCreate(generics.ListCreateAPIView):
-    queryset = Contact.objects.all()
     serializer_class = ContactSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.role == 'manager':
+            return Contact.objects.all()
+        return Contact.objects.filter(lead__created_by=user)
 
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
 
 class ContactsDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Contact.objects.all()
     serializer_class = ContactSerializer
     permission_classes = [IsManagerOrReadOnly]
 
+    def get_queryset(self):
+        user = self.request.user
+        if user.role == 'manager':
+            return Contact.objects.all()
+        return Contact.objects.filter(lead__created_by=user)
 # reminders
 class ReminderListCreate(generics.ListCreateAPIView):
-    queryset = Reminder.objects.all()
     serializer_class = ReminderSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.role == 'manager':
+            return Reminder.objects.all()
+        return Reminder.objects.filter(lead__created_by=user)
 
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
 
 class ReminderDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Reminder.objects.all()
     serializer_class = ReminderSerializer
     permission_classes = [IsManagerOrReadOnly]
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.role == 'manager':
+            return Reminder.objects.all()
+        return Reminder.objects.filter(lead__created_by=user)

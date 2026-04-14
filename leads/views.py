@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from .models import Lead, Notes, Contact
-from .serializers import LeadSerializer, NotesSerializer, ContactSerializer
+from .models import Lead, Notes, Contact, Reminder
+from .serializers import LeadSerializer, NotesSerializer, ContactSerializer, ReminderSerializer
 from rest_framework import generics, permissions, filters
 from .permissions import IsManagerOrReadOnly
 from django_filters.rest_framework import DjangoFilterBackend
@@ -58,4 +58,18 @@ class ContactListCreate(generics.ListCreateAPIView):
 class ContactsDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Contact.objects.all()
     serializer_class = ContactSerializer
+    permission_classes = [IsManagerOrReadOnly]
+
+# reminders
+class ReminderListCreate(generics.ListCreateAPIView):
+    queryset = Reminder.objects.all()
+    serializer_class = ReminderSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
+
+class ReminderDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Reminder.objects.all()
+    serializer_class = ReminderSerializer
     permission_classes = [IsManagerOrReadOnly]

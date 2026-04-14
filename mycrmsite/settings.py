@@ -139,7 +139,13 @@ CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = TIME_ZONE
-
+#tell Celery Beat to run check_pending_reminders task every 60 seconds
+CELERY_BEAT_SCHEDULE = {
+    'check-reminders-every-minute':{
+        'task': 'leads.tasks.check_pending_reminders',
+        'schedule': 60.0,
+    },
+}
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/

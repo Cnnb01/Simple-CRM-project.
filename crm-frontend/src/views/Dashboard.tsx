@@ -11,7 +11,7 @@ const Dashboard: React.FC = () => {
             try {
                 const resp = await api.get("leads/")
                 console.log("Data from Django:", resp.data);
-                setLeads(Array.isArray(resp.data) ? resp.data : resp.data.results);
+                setLeads(resp.data);
             } catch (err) {
                 console.error("Failed to fetch leads", err)
             } finally{

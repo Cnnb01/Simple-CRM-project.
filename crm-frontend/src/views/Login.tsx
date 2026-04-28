@@ -12,6 +12,7 @@ const Login: React.FC = () => {
         setError(null); // Clear previous errors
         try {
             const resp = await api.post("token", {username, password})
+            // localStorage.setItem() a Web Storage API method used to save data to a user's browser
             localStorage.setItem("access_token", resp.data.access)
             localStorage.setItem("refresh_token", resp.data.refresh)
             alert("Success")

@@ -51,7 +51,7 @@ const Dashboard: React.FC = () => {
                         
                         <div className="border-t border-stone-50 pt-4 mt-4 flex justify-between items-center">
                             <p className="text-xs text-stone-400">Agent: {lead.created_by_name}</p>
-                            <button className="text-stone-800 text-sm font-semibold hover:underline">View Details</button>
+                            <button className="text-stone-800 text-sm font-semibold hover:underline" onClick={()=>navigate(`/leads/${lead.id}`)}>View Details</button>
                         </div>
                     </div>
                 ))}

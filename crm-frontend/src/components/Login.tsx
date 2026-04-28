@@ -1,11 +1,13 @@
 import { useState } from "react";
 import api from "../api/axios";
+import { useNavigate } from "react-router-dom";
 
 const Login: React.FC = () => {
     const [username, setUserName] = useState<string>("")
     const [password, setPassword] = useState<string>("")
     const [error, setError] = useState<string|null>(null);
 
+    const navigate = useNavigate()
     // React.FormEvent - the specific type for form submissions
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -15,7 +17,7 @@ const Login: React.FC = () => {
             // localStorage.setItem() a Web Storage API method used to save data to a user's browser
             localStorage.setItem("access_token", resp.data.access)
             localStorage.setItem("refresh_token", resp.data.refresh)
-            alert("Success")
+            navigate("/dashboard")
         } catch (err) {
             setError("Invalid credentials. Try again!");
             console.error(err);

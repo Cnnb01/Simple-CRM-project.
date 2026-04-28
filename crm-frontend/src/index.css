@@ -15,4 +15,26 @@
   .crm-label {
     @apply block text-sm font-semibold text-stone-600 tracking-tight uppercase;
   }
+  /* The Input fields - clean and minimalist */
+  .crm-input {
+    @apply mt-1.5 w-full px-4 py-2.5 bg-white border border-stone-200 rounded-md 
+           focus:ring-1 focus:ring-stone-400 focus:border-stone-400 focus:outline-none 
+           transition-all duration-200 placeholder:text-stone-400;
+  }
+  /* The "Card" container for forms and dashboard items */
+  .crm-card {
+    @apply bg-white border border-stone-200 rounded-xl shadow-sm p-8 max-w-md w-full;
+  }
+  /* Dashboard Grid Layout */
+  .crm-dashboard-grid {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-8;
+  }
+
+  /* Status Tags (Leads) */
+  .crm-tag {
+    @apply px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-widest border;
+  }
+  
+  .crm-tag-hot { @apply bg-orange-50 text-orange-700 border-orange-100; }
+  .crm-tag-warm { @apply bg-stone-100 text-stone-700 border-stone-200; }
 }

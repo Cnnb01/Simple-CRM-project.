@@ -13,8 +13,8 @@ export interface Lead {
     lead_name: string;
     email: string;
     company_name: string;
-    status: string;
-    lead_type: string;
+    status: LeadStatus;
+    lead_type: LeadType;
     created_by_name: string
     created_at: string;
 }

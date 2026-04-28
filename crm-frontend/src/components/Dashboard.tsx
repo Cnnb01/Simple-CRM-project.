@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import api from "../api/axios";
 import type { Lead } from "../types";
 
 const Dashboard: React.FC = () => {
+    const navigate = useNavigate();
     const [leads, setLeads] = useState<Lead[]>([])
     const [loading, setLoading] = useState<boolean>(true)
 
@@ -29,7 +31,7 @@ const Dashboard: React.FC = () => {
                     <h1 className="text-4xl font-serif text-stone-800">Lead Registry</h1>
                     <p className="text-stone-500 mt-2 italic">Curated relationships and opportunities.</p>
                 </div>
-                <button className="crm-btn-main !w-auto px-6">Add New Lead</button>
+                <button className="crm-btn-main !w-auto px-6" onClick={() => navigate("/add-lead")}>Add New Lead</button>
             </header>
 
             <main className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

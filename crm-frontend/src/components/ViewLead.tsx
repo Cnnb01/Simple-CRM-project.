@@ -69,7 +69,10 @@ const ViewLead = () => {
                                 <div>
                                     <span className="text-xs text-stone-400 uppercase font-bold tracking-widest">Current Status</span>
                                     <p className="mt-1">
-                                        <span className="bg-stone-100 text-stone-700 px-2 py-1 rounded text-xs font-bold">
+                                        {/* <span className="bg-stone-100 text-stone-700 px-2 py-1 rounded text-xs font-bold"> */}
+                                        <span className={`px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest ${
+                        lead.status === 'CLOSED' ? 'bg-green-100 text-green-700' : 'bg-stone-200 text-stone-700'
+                    }`}>
                                             {lead.status}
                                         </span>
                                     </p>

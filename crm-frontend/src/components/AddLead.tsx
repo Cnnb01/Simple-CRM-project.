@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import {useState} from "react";
 import api from "../api/axios";
 import type { Lead, LeadStatus, LeadType  } from "../types";
 import { useNavigate } from 'react-router-dom';

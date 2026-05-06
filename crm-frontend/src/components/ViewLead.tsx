@@ -11,6 +11,7 @@ const ViewLead = () => {
         const fetchLead = async () => {
             try {
                 const resp = await api.get(`leads/${id}/`);
+                console.log("DATA FROM BACKEND",resp.data);
                 setLead(resp.data);
             } catch (error) {
                 console.error("Failed to fetch", error);
@@ -69,7 +70,6 @@ const ViewLead = () => {
                                 <div>
                                     <span className="text-xs text-stone-400 uppercase font-bold tracking-widest">Current Status</span>
                                     <p className="mt-1">
-                                        {/* <span className="bg-stone-100 text-stone-700 px-2 py-1 rounded text-xs font-bold"> */}
                                         <span className={`px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest ${
                         lead.status === 'CLOSED' ? 'bg-green-100 text-green-700' : 'bg-stone-200 text-stone-700'
                     }`}>
@@ -80,7 +80,8 @@ const ViewLead = () => {
                             </div>
                         </div>
 
-                        {/* This is where we will later map through Notes */}
+                        {/* Notes display */}
+
                         <div className="crm-card !max-w-none opacity-50 border-dashed">
                             <h3 className="crm-label mb-2">Notes & Interactions</h3>
                             <p className="text-stone-400 italic text-sm">No notes recorded yet...</p>

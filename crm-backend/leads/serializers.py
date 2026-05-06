@@ -33,6 +33,6 @@ class LeadSerializer(serializers.ModelSerializer):
         model = Lead
         fields = [
             'id', 'lead_name', 'email', 'company_name','status','lead_type', 
-            'created_by', 'created_by_name', 'notes', 'contacts','reminders'
+            'created_by', 'created_by_name', 'created_at', 'notes', 'contacts','reminders'
         ]
         read_only_fields = ['created_by']

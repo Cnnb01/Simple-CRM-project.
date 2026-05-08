@@ -14,6 +14,8 @@ const AddLead = () => {
         lead_type: "COLD",
         created_by_name: "",
         created_at: "",
+        notes: [],
+        contacts: []
     })
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;

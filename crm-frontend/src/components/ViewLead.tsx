@@ -6,7 +6,7 @@ import type { Lead, Notes } from "../types";
 const ViewLead = () => {
     const { id } = useParams<{ id: string }>();
     const [lead, setLead] = useState<Lead | null>(null);
-    
+    const [noteContent, setnoteContent] = useState("")
 
     useEffect(() => {
         const fetchLead = async () => {
@@ -26,14 +26,29 @@ const ViewLead = () => {
             <div className="animate-pulse text-stone-400 font-medium">Loading Lead Profile...</div>
         </div>
     );
+     const handleAddNote = async(e: React.FormEvent)=>{
+        e.preventDefault()
+        try {
+            const req = await api.post(`leads/notes/`, {content:noteContent,lead:id})
+            console.log("posted the note",req)
+            if(lead){
+                setLead({
+                    ...lead,
+                    notes:[...lead.notes, req.data]
+                })
+            }
+            setnoteContent("")
+        } catch (error) {
+            console.error("Failed to save note:", error)
+        }
+        
+     }
 
     return (
         <div className="crm-page-container !justify-start !items-start bg-[#fcfaf7]">
             {/* Navigation Header */}
             <div className="max-w-4xl w-full mx-auto mt-10">
-                <Link to="/dashboard" className="text-stone-500 hover:text-stone-800 text-sm mb-6 inline-block transition-colors">
-                    ← Back to Dashboard
-                </Link>
+                <Link to="/dashboard" className="text-stone-500 hover:text-stone-800 text-sm mb-6 inline-block transition-colors">← Back to Dashboard</Link>
 
                 <div className="crm-card !max-w-none flex flex-col md:flex-row justify-between items-start gap-6">
                     {/* Primary Info */}
@@ -104,6 +119,29 @@ const ViewLead = () => {
                                 </div>}
                         </div>    
                     </div>
+                    {/* adding notes */}
+                    {/* Adding Notes Form */}
+                    <div className="crm-card !max-w-none mt-6">
+                        <h3 className="crm-label mb-4">Add New Note</h3>
+                        <form onSubmit={handleAddNote} className="space-y-4">
+                            <textarea 
+                                className="w-full p-4 bg-stone-50 border border-stone-200 rounded-md focus:ring-1 focus:ring-stone-400 focus:border-stone-400 outline-none transition-all text-sm text-stone-800 placeholder-stone-400"
+                                rows={3}
+                                placeholder="Type your lead notes here..."
+                                value={noteContent}
+                                onChange={(e) => setnoteContent(e.target.value)}
+                            />
+                            <div className="flex justify-end">
+                                <button 
+                                    type="submit" 
+                                    className="crm-btn-main !w-auto px-10 py-2 text-sm"
+                                >
+                                    Save Note
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    
 
                     {/* Metadata Sidebar */}
                     <div className="space-y-6">

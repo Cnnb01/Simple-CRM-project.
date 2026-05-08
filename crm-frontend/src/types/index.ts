@@ -17,6 +17,8 @@ export interface Lead {
     lead_type: LeadType;
     created_by_name: string
     created_at: string;
+    notes: Notes[]
+    contacts: Contact[]
 }
 
 export interface Notes {

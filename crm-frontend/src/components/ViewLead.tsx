@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import api from "../api/axios";
-import type { Lead } from "../types";
+import type { Lead, Notes } from "../types";
 
 const ViewLead = () => {
     const { id } = useParams<{ id: string }>();
     const [lead, setLead] = useState<Lead | null>(null);
+    
 
     useEffect(() => {
         const fetchLead = async () => {
@@ -81,11 +82,27 @@ const ViewLead = () => {
                         </div>
 
                         {/* Notes display */}
-
-                        <div className="crm-card !max-w-none opacity-50 border-dashed">
-                            <h3 className="crm-label mb-2">Notes & Interactions</h3>
-                            <p className="text-stone-400 italic text-sm">No notes recorded yet...</p>
-                        </div>
+                        <h3 className="crm-label mb-2">Notes & Interactions</h3>
+                        <div className="space-y-4">
+                            {lead.notes && lead.notes.length > 0 ? (
+                                lead.notes.map((note) => (
+                                    <div key={note.id} className="p-4 bg-stone-50 rounded-lg border border-stone-100">
+                                        <p className="text-stone-800 text-sm">{note.content}</p>
+                                        <div className="mt-2 flex justify-between items-center">
+                                            <span className="text-[10px] text-stone-400 uppercase font-bold tracking-widest">
+                                                {note.created_by}
+                                            </span>
+                                            <span className="text-[10px] text-stone-400">
+                                                {new Date(note.created_at).toLocaleDateString()}
+                                            </span>
+                                        </div>
+                                    </div>
+                                ))
+                            ):
+                                <div className="crm-card !max-w-none opacity-50 border-dashed">
+                                    <p className="text-stone-400 italic text-sm">No notes recorded yet...</p>
+                                </div>}
+                        </div>    
                     </div>
 
                     {/* Metadata Sidebar */}

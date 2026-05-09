@@ -7,6 +7,7 @@ const ViewLead = () => {
     const { id } = useParams<{ id: string }>();
     const [lead, setLead] = useState<Lead | null>(null);
     const [noteContent, setnoteContent] = useState("")
+    const [phone, setPhone] = useState("")
 
     useEffect(() => {
         const fetchLead = async () => {
@@ -26,7 +27,7 @@ const ViewLead = () => {
             <div className="animate-pulse text-stone-400 font-medium">Loading Lead Profile...</div>
         </div>
     );
-     const handleAddNote = async(e: React.FormEvent)=>{
+    const handleAddNote = async(e: React.FormEvent)=>{
         e.preventDefault()
         try {
             const req = await api.post(`leads/notes/`, {content:noteContent,lead:id})
@@ -42,7 +43,27 @@ const ViewLead = () => {
             console.error("Failed to save note:", error)
         }
         
-     }
+    }
+
+    const handleAddContact = async(e: React.FormEvent)=>{
+        e.preventDefault()
+        try {
+            const req = await api.post(`leads/contacts/`,{phone_number:phone, lead:id})
+            console.log("posted the phone number", req)
+            if(lead){
+                setLead({
+                    ...lead,
+                    contacts:[...lead.contacts, req.data]
+                })
+            }
+            setPhone("")
+        } catch (error) {
+            console.error("Failed to save phone number:", error)
+   
+        }
+    }
+
+
 
     return (
         <div className="crm-page-container !justify-start !items-start bg-[#fcfaf7]">
@@ -120,7 +141,6 @@ const ViewLead = () => {
                         </div>    
                     </div>
                     {/* adding notes */}
-                    {/* Adding Notes Form */}
                     <div className="crm-card !max-w-none mt-6">
                         <h3 className="crm-label mb-4">Add New Note</h3>
                         <form onSubmit={handleAddNote} className="space-y-4">
@@ -141,7 +161,16 @@ const ViewLead = () => {
                             </div>
                         </form>
                     </div>
-                    
+                    {/* adding contacts */}
+                    <div>
+                        <h4>Add lead phone number</h4>
+                        <form onSubmit={handleAddContact}> 
+                            <input type="tel" placeholder="Enter phone number" className="w-full p-4 bg-stone-50 border border-stone-200 rounded-md focus:ring-1 focus:ring-stone-400 focus:border-stone-400 outline-none transition-all text-sm text-stone-800 placeholder-stone-400"
+                            value={phone}
+                            onChange={(e)=>setPhone(e.target.value)}/>
+                            <button className="mt-2 crm-btn-main !w-auto px-10 py-2 text-sm">Save Contact</button>
+                        </form>
+                    </div>
 
                     {/* Metadata Sidebar */}
                     <div className="space-y-6">

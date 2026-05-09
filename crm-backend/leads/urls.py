@@ -8,6 +8,6 @@ urlpatterns = [
     path('notes/<int:pk>/',NotesDetail.as_view(),name='note-detail'),
     path('reminders/', ReminderListCreate.as_view(), name='reminder-list-create'),
     path('reminders/<int:pk>/', ReminderDetail.as_view(), name='reminder-detail'),
-    # path('contacts/',ContactListCreate.as_view(),name='contact-list-create'),
-    # path('contacts/<int:pk>/',ContactsDetail.as_view(),name='contact-detail'),
+    path('contacts/',ContactListCreate.as_view(),name='contact-list-create'),
+    path('contacts/<int:pk>/',ContactsDetail.as_view(),name='contact-detail'),
 ]

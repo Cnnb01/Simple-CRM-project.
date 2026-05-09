@@ -67,12 +67,10 @@ const ViewLead = () => {
 
     return (
         <div className="crm-page-container !justify-start !items-start bg-[#fcfaf7]">
-            {/* Navigation Header */}
             <div className="max-w-4xl w-full mx-auto mt-10">
                 <Link to="/dashboard" className="text-stone-500 hover:text-stone-800 text-sm mb-6 inline-block transition-colors">← Back to Dashboard</Link>
 
                 <div className="crm-card !max-w-none flex flex-col md:flex-row justify-between items-start gap-6">
-                    {/* Primary Info */}
                     <div className="flex-1">
                         <div className="flex items-center gap-3 mb-2">
                             <h1 className="text-3xl font-bold text-stone-900 tracking-tight">
@@ -85,7 +83,6 @@ const ViewLead = () => {
                         <p className="text-lg text-stone-500 font-medium">{lead.company_name}</p>
                     </div>
 
-                    {/* Action Buttons (Edit/Delete placeholder) */}
                     <div className="flex gap-3">
                         <button className="px-4 py-2 border border-stone-200 text-stone-600 rounded-md text-sm font-semibold hover:bg-stone-50 transition-all">
                             Edit Profile
@@ -93,105 +90,118 @@ const ViewLead = () => {
                     </div>
                 </div>
 
-                {/* Detailed Information Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
-                    {/* Contact Details Column */}
-                    <div className="md:col-span-2 space-y-6">
-                        <div className="crm-card !max-w-none">
-                            <h3 className="crm-label mb-4 border-b border-stone-100 pb-2">Contact Information</h3>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
+                    <div className="md:col-span-2 space-y-8">
+                        <div className="bg-white border border-stone-200 rounded-lg p-6 shadow-sm">
+                            <h3 className="crm-label mb-6 border-b border-stone-100 pb-2">Contact Details</h3>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                                 <div>
-                                    <span className="text-xs text-stone-400 uppercase font-bold tracking-widest">Email Address</span>
+                                    <span className="text-[10px] text-stone-400 uppercase font-bold tracking-widest">Email Address</span>
                                     <p className="text-stone-800 font-medium mt-1">{lead.email}</p>
                                 </div>
                                 <div>
-                                    <span className="text-xs text-stone-400 uppercase font-bold tracking-widest">Current Status</span>
-                                    <p className="mt-1">
-                                        <span className={`px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest ${
-                        lead.status === 'CLOSED' ? 'bg-green-100 text-green-700' : 'bg-stone-200 text-stone-700'
-                    }`}>
+                                    <span className="text-[10px] text-stone-400 uppercase font-bold tracking-widest">Status</span>
+                                    <div className="mt-1">
+                                        <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest ${
+                                            lead.status === 'CLOSED' ? 'bg-green-100 text-green-700' : 'bg-stone-200 text-stone-700'
+                                        }`}>
                                             {lead.status}
                                         </span>
-                                    </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        {/* Notes display */}
-                        <h3 className="crm-label mb-2">Notes & Interactions</h3>
                         <div className="space-y-4">
-                            {lead.notes && lead.notes.length > 0 ? (
-                                lead.notes.map((note) => (
-                                    <div key={note.id} className="p-4 bg-stone-50 rounded-lg border border-stone-100">
-                                        <p className="text-stone-800 text-sm">{note.content}</p>
-                                        <div className="mt-2 flex justify-between items-center">
-                                            <span className="text-[10px] text-stone-400 uppercase font-bold tracking-widest">
-                                                {note.created_by}
-                                            </span>
-                                            <span className="text-[10px] text-stone-400">
-                                                {new Date(note.created_at).toLocaleDateString()}
-                                            </span>
+                            <h3 className="crm-label flex items-center gap-2">
+                                Notes & Interactions 
+                                <span className="bg-stone-100 text-stone-500 px-2 py-0.5 rounded-full text-[10px]">{lead.notes?.length || 0}</span>
+                            </h3>
+                            
+                            <div className="space-y-4">
+                                {lead.notes && lead.notes.length > 0 ? (
+                                    lead.notes.map((note) => (
+                                        <div key={note.id} className="p-5 bg-white border border-stone-100 rounded-lg shadow-sm">
+                                            <p className="text-stone-700 text-sm leading-relaxed">{note.content}</p>
+                                            <div className="mt-4 flex justify-between items-center border-t border-stone-50 pt-3">
+                                                <span className="text-[10px] text-stone-400 font-bold uppercase tracking-tight">
+                                                    By {note.created_by}
+                                                </span>
+                                                <span className="text-[10px] text-stone-300">
+                                                    {new Date(note.created_at).toLocaleDateString()}
+                                                </span>
+                                            </div>
                                         </div>
+                                    ))
+                                ) : (
+                                    <div className="p-8 border-2 border-dashed border-stone-100 rounded-lg text-center">
+                                        <p className="text-stone-400 italic text-sm">No recorded interactions.</p>
                                     </div>
-                                ))
-                            ):
-                                <div className="crm-card !max-w-none opacity-50 border-dashed">
-                                    <p className="text-stone-400 italic text-sm">No notes recorded yet...</p>
-                                </div>}
-                        </div>    
-                    </div>
-                    {/* adding notes */}
-                    <div className="crm-card !max-w-none mt-6">
-                        <h3 className="crm-label mb-4">Add New Note</h3>
-                        <form onSubmit={handleAddNote} className="space-y-4">
-                            <textarea 
-                                className="w-full p-4 bg-stone-50 border border-stone-200 rounded-md focus:ring-1 focus:ring-stone-400 focus:border-stone-400 outline-none transition-all text-sm text-stone-800 placeholder-stone-400"
-                                rows={3}
-                                placeholder="Type your lead notes here..."
-                                value={noteContent}
-                                onChange={(e) => setnoteContent(e.target.value)}
-                            />
-                            <div className="flex justify-end">
-                                <button 
-                                    type="submit" 
-                                    className="crm-btn-main !w-auto px-10 py-2 text-sm"
-                                >
-                                    Save Note
-                                </button>
+                                )}
                             </div>
-                        </form>
-                    </div>
-                    {/* adding contacts */}
-                    <div>
-                        <h4>Add lead phone number</h4>
-                        <form onSubmit={handleAddContact}> 
-                            <input type="tel" placeholder="Enter phone number" className="w-full p-4 bg-stone-50 border border-stone-200 rounded-md focus:ring-1 focus:ring-stone-400 focus:border-stone-400 outline-none transition-all text-sm text-stone-800 placeholder-stone-400"
-                            value={phone}
-                            onChange={(e)=>setPhone(e.target.value)}/>
-                            <button className="mt-2 crm-btn-main !w-auto px-10 py-2 text-sm">Save Contact</button>
-                        </form>
+
+                            {/* Add Note Form */}
+                            <div className="bg-stone-50/50 border border-stone-200 rounded-lg p-6 mt-4">
+                                <h4 className="text-xs font-bold text-stone-500 uppercase tracking-widest mb-4">Log New Interaction</h4>
+                                <form onSubmit={handleAddNote} className="space-y-3">
+                                    <textarea 
+                                        className="w-full p-4 bg-white border border-stone-200 rounded-md focus:ring-1 focus:ring-stone-400 focus:border-stone-400 outline-none transition-all text-sm text-stone-800 placeholder-stone-400 shadow-sm"
+                                        rows={3}
+                                        placeholder="What happened during this contact?"
+                                        value={noteContent}
+                                        onChange={(e) => setnoteContent(e.target.value)}
+                                    />
+                                    <div className="flex justify-end">
+                                        <button type="submit" className="crm-btn-main !w-auto px-8 py-2 text-xs">Save Note</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
 
-                    {/* Metadata Sidebar */}
                     <div className="space-y-6">
-                        <div className="crm-card !max-w-none bg-stone-50/50">
-                            <h3 className="crm-label mb-4">Meta Details</h3>
+                        
+                        <div className="bg-white border border-stone-200 rounded-lg p-6 shadow-sm">
+                            <h3 className="crm-label mb-4 border-b border-stone-100 pb-2">Phone Numbers</h3>
+                            <div className="space-y-3 mb-6">
+                                {lead.contacts && lead.contacts.length > 0 ? (
+                                    lead.contacts.map((contact) => (
+                                        <div key={contact.id} className="flex items-center gap-3 text-stone-700 bg-stone-50 p-2 rounded border border-stone-100">
+                                            <span className="text-xs font-mono">{contact.phone_number}</span>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <p className="text-stone-400 text-xs italic">No numbers saved.</p>
+                                )}
+                            </div>
+
+                            <form onSubmit={handleAddContact} className="pt-4 border-t border-stone-100">
+                                <label className="text-[10px] font-bold text-stone-400 uppercase block mb-2">Add New Number</label>
+                                <div className="flex flex-col gap-2">
+                                    <input 
+                                        type="tel" 
+                                        placeholder="+254..." 
+                                        className="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded text-sm focus:outline-none focus:border-stone-400"
+                                        value={phone}
+                                        onChange={(e) => setPhone(e.target.value)}
+                                    />
+                                    <button className="w-full py-2 bg-stone-200 text-stone-700 rounded text-[10px] font-bold uppercase hover:bg-stone-300 transition-colors">
+                                        Add Contact
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div className="bg-stone-800 text-stone-100 rounded-lg p-6 shadow-md">
+                            <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] mb-4 text-stone-400">Account metadata</h3>
                             <div className="space-y-4">
                                 <div>
-                                    <span className="text-[10px] text-stone-400 uppercase font-bold tracking-widest">Account Owner</span>
-                                    <p className="text-stone-700 text-sm font-medium">{lead.created_by_name || "Assigned Agent"}</p>
+                                    <span className="text-[10px] text-stone-500 uppercase font-bold">Assigned To</span>
+                                    <p className="text-sm font-medium">{lead.created_by_name || "Unassigned"}</p>
                                 </div>
                                 <div>
-                                    <span className="text-[10px] text-stone-400 uppercase font-bold tracking-widest">Owner Contact</span>
-                                    <p className="text-stone-700 text-sm font-medium">
-                                        {lead.contacts && lead.contacts.length > 0 ? lead.contacts.map((contact)=> <p key={contact.id}>{contact.phone_number}</p>):<p>No contact info</p>}
-                                    </p>
-                                </div>
-                                <div>
-                                    <span className="text-[10px] text-stone-400 uppercase font-bold tracking-widest">Created Date</span>
-                                    <p className="text-stone-700 text-sm">
-                                        {new Date(lead.created_at).toLocaleDateString()}
-                                    </p>
+                                    <span className="text-[10px] text-stone-500 uppercase font-bold">Acquisition Date</span>
+                                    <p className="text-sm">{new Date(lead.created_at).toLocaleDateString(undefined, { dateStyle: 'long' })}</p>
                                 </div>
                             </div>
                         </div>

@@ -153,6 +153,12 @@ const ViewLead = () => {
                                     <p className="text-stone-700 text-sm font-medium">{lead.created_by_name || "Assigned Agent"}</p>
                                 </div>
                                 <div>
+                                    <span className="text-[10px] text-stone-400 uppercase font-bold tracking-widest">Owner Contact</span>
+                                    <p className="text-stone-700 text-sm font-medium">
+                                        {lead.contacts && lead.contacts.length > 0 ? lead.contacts.map((contact)=> <p key={contact.id}>{contact.phone_number}</p>):<p>No contact info</p>}
+                                    </p>
+                                </div>
+                                <div>
                                     <span className="text-[10px] text-stone-400 uppercase font-bold tracking-widest">Created Date</span>
                                     <p className="text-stone-700 text-sm">
                                         {new Date(lead.created_at).toLocaleDateString()}

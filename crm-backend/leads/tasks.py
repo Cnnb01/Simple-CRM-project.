@@ -18,9 +18,12 @@ from django.utils import timezone
 
 @shared_task
 def check_pending_reminders():
-    now = timezone.now()
+    now = timezone.localtime(timezone.now())
+    current_date = now.date()
+    current_time = now.time()
+    print(f"Celery checking for {current_date} at {current_time}")
     # reminders not yet sent
-    due_reminders = Reminder.objects.filter(reminder_time__lte = now, is_sent=False)
+    due_reminders = Reminder.objects.filter(date=current_date,reminder_time__lte = current_time, is_sent=False)
 
     for r in due_reminders:
         print(f"Alarm: {r.message} for {r.lead.lead_name}")

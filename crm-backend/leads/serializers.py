@@ -17,7 +17,7 @@ class ReminderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Reminder
         fields = [
-            'id', 'lead', 'reminder_time', 
+            'id', 'lead', 'date', 'reminder_time', 
             'message', 'is_sent', 'created_by'
         ]
         read_only_fields = ['created_by',]

@@ -19,6 +19,7 @@ export interface Lead {
     created_at: string;
     notes: Notes[]
     contacts: Contact[]
+    reminders: Reminder[]
 }
 
 export interface Notes {

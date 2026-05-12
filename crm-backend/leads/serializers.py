@@ -18,12 +18,12 @@ class ReminderSerializer(serializers.ModelSerializer):
         model = Reminder
         fields = [
             'id', 'lead', 'date', 'reminder_time', 
-            'message', 'is_sent', 'created_by'
+            'message', 'is_sent', 'is_acknowledged','created_by'
         ]
         read_only_fields = ['created_by',]
 
 class LeadSerializer(serializers.ModelSerializer):
-    # These 'related_names' from your Models allow us to nest the data
+    #'related_names' from your Models allow us to nest the data
     notes = NotesSerializer(many=True, read_only=True)
     contacts = ContactSerializer(many=True, read_only=True)
     reminders = ReminderSerializer(many=True, read_only=True)

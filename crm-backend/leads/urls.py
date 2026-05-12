@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import LeadListCreate,LeadDetail,NoteListCreate, NotesDetail,ContactListCreate,ContactsDetail, ReminderListCreate, ReminderDetail
+from .views import LeadListCreate,LeadDetail,NoteListCreate, NotesDetail,ContactListCreate,ContactsDetail, ReminderListCreate, ReminderDetail, get_unread_reminders
 
 urlpatterns = [
     path('',LeadListCreate.as_view(),name='lead-list-create'),
@@ -8,6 +8,7 @@ urlpatterns = [
     path('notes/<int:pk>/',NotesDetail.as_view(),name='note-detail'),
     path('reminders/', ReminderListCreate.as_view(), name='reminder-list-create'),
     path('reminders/<int:pk>/', ReminderDetail.as_view(), name='reminder-detail'),
+    path('unread-reminders/',get_unread_reminders, name='get_unread_reminders'),
     path('contacts/',ContactListCreate.as_view(),name='contact-list-create'),
     path('contacts/<int:pk>/',ContactsDetail.as_view(),name='contact-detail'),
 ]

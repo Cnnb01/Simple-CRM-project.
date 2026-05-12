@@ -49,6 +49,7 @@ class Reminder(models.Model):
     reminder_time = models.TimeField(null=False)
     message = models.TextField()
     is_sent = models.BooleanField(default=False)
+    is_acknowledged = models.BooleanField(default=False)
 
     def __str__(self):
         return f"Reminder for {self.lead.lead_name} for {self.date} at {self.reminder_time}"

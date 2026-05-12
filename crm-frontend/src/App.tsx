@@ -3,11 +3,15 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Dashboard from "./components/Dashboard";
 import AddLead from "./components/AddLead";
 import ViewLead from "./components/ViewLead";
+import ReminderPopup from "./components/ReminderPopup";
+import { ReminderProvider } from "./context/ReminderContext";
 // const isAuthenticated = () => !!localStorage.getItem("access_token");
 function App() {
   return (
       <>
+      <ReminderProvider>
       <Router>
+        <ReminderPopup />
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<Navigate to="/dashboard" />} />
@@ -18,7 +22,7 @@ function App() {
           <Route path="*" element={<div className="p-10">404 - Page Not Found</div>} />
         </Routes>
       </Router>
-
+      </ReminderProvider>
       </>
     )
 }

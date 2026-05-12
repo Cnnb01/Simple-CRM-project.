@@ -221,7 +221,38 @@ const ViewLead = () => {
                         </div>
                         
                         {/* reminders display */}
+                        <div className="space-y-6 mt-8">
+                            <div className="flex items-center justify-between border-b border-stone-200 pb-2">
+                                <h3 className="crm-label">Upcoming Reminders</h3>
+                                <span className="text-[10px] bg-stone-100 text-stone-500 px-2 py-0.5 rounded-full font-bold tracking-widest uppercase">Active</span>
+                            </div>
+                        <div className="space-y-3">{lead.reminders && lead.reminders.length > 0 ? (lead.reminders.filter((reminder)=>!reminder.is_sent).map((reminder)=>(
+                            <div key={reminder.id} className="flex gap-4 p-4 bg-white border border-stone-100 rounded-lg shadow-sm hover:border-stone-300 transition-colors group">
+                        
+                            <div className="flex flex-col items-center justify-center min-w-[60px] border-r border-stone-100 pr-4">
+                            <span className="text-xs font-bold text-stone-800">
+                                {new Date(reminder.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                            </span>
+                            <span className="text-[10px] text-stone-400 font-medium">{reminder.reminder_time}</span>
+                        </div>
+                        
+                        <div className="flex-1 flex items-center">
+                            <p className="text-sm text-stone-600 leading-relaxed">
+                                {reminder.message}
+                            </p>
+                        </div>
 
+                        <div className="flex items-center">
+                            <div className="h-2 w-2 rounded-full bg-amber-400 animate-pulse" title="Pending"></div>
+                        </div>
+                    </div>
+                ))
+                ) : (
+                        <div className="p-8 border-2 border-dashed border-stone-100 rounded-xl flex flex-col items-center justify-center">
+                            <p className="text-stone-400 italic text-sm">No scheduled reminders</p>
+                        </div>
+                        )}
+                    </div>
                         {/* adding reminders form */}
                         <form onSubmit={handleAddReminder} className="space-y-3">
                             <textarea 
@@ -253,6 +284,7 @@ const ViewLead = () => {
                                 <button type="submit" className="crm-btn-main !w-auto px-8 py-2 text-xs">Save Reminder</button>
                             </div>
                         </form>
+                        </div>
 
                         {/* account's extra data */}
                         <div className="bg-stone-800 text-stone-100 rounded-lg p-6 shadow-md">

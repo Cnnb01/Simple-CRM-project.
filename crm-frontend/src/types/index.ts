@@ -45,4 +45,5 @@ export interface Reminder {
     created_by: string;
     reminder_time: string;
     is_sent: boolean;
+    date:string;
 }

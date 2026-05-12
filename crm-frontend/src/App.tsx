@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Dashboard from "./components/Dashboard";
 import AddLead from "./components/AddLead";
 import ViewLead from "./components/ViewLead";
-const isAuthenticated = () => !!localStorage.getItem("access_token");
+// const isAuthenticated = () => !!localStorage.getItem("access_token");
 function App() {
   return (
       <>

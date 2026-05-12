@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import api from "../api/axios";
-import type { Lead, Notes, Reminder } from "../types";
+import type { Lead } from "../types";
 
 const ViewLead = () => {
     const { id } = useParams<{ id: string }>();

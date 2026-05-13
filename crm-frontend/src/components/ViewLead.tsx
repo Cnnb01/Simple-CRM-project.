@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import api from "../api/axios";
 import type { Lead } from "../types";
 
@@ -11,7 +11,7 @@ const ViewLead = () => {
     const [remMsg, setRemMsg] = useState("")
     const [remDate, setRemDate] = useState("")
     const [remTime, setRemTime] = useState("")
-    
+    const navigate = useNavigate()
 
     useEffect(() => {
         const fetchLead = async () => {
@@ -90,6 +90,14 @@ const ViewLead = () => {
         }
     }
 
+    const getTagClass = (type: string) => {
+    switch (type) {
+        case 'HOT': return 'crm-tag-hot';
+        case 'WARM': return 'crm-tag-warm';
+        case 'COLD': return 'crm-tag-cold';
+        default: return 'crm-tag-warm';
+    }
+};
 
 
     return (
@@ -103,15 +111,13 @@ const ViewLead = () => {
                             <h1 className="text-3xl font-bold text-stone-900 tracking-tight">
                                 {lead.lead_name}
                             </h1>
-                            <span className={`crm-tag ${lead.lead_type === 'HOT' ? 'crm-tag-hot' : 'crm-tag-warm'}`}>
-                                {lead.lead_type}
-                            </span>
+                            <span className={`crm-tag ${getTagClass(lead.lead_type)}`}>{lead.lead_type}</span>
                         </div>
                         <p className="text-lg text-stone-500 font-medium">{lead.company_name}</p>
                     </div>
 
                     <div className="flex gap-3">
-                        <button className="px-4 py-2 border border-stone-200 text-stone-600 rounded-md text-sm font-semibold hover:bg-stone-50 transition-all">
+                        <button className="px-4 py-2 border border-stone-200 text-stone-600 rounded-md text-sm font-semibold hover:bg-stone-50 transition-all" onClick={()=>navigate(`/edit-lead/${id}`)}> 
                             Edit Profile
                         </button>
                     </div>

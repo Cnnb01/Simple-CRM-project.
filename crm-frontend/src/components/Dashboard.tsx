@@ -28,6 +28,14 @@ const Dashboard: React.FC = () => {
     },[])
     if (loading) return <div className="crm-page-container italic text-stone-500">Loading the dashboard...</div>;
 
+    const getTagClass = (type: string) => {
+    switch (type) {
+        case 'HOT': return 'crm-tag-hot';
+        case 'WARM': return 'crm-tag-warm';
+        case 'COLD': return 'crm-tag-cold';
+        default: return 'crm-tag-warm';
+    }
+};
     return(
         <div className="min-h-screen bg-[#fcfaf7] p-8">
             <header className="max-w-6xl mx-auto mb-10 flex justify-between items-end">
@@ -42,11 +50,7 @@ const Dashboard: React.FC = () => {
                 {leads.map((lead) => (
                     <div key={lead.id} className="bg-white p-6 rounded-lg border border-stone-100 shadow-sm hover:shadow-md transition-shadow">
                         <div className="flex justify-between items-start mb-4">
-                            <span className={`text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded ${
-                                lead.lead_type === 'HOT' ? 'bg-orange-50 text-orange-700' : 'bg-stone-50 text-stone-600'
-                            }`}>
-                                {lead.lead_type}
-                            </span>
+                            <span className={`crm-tag ${getTagClass(lead.lead_type)}`}>{lead.lead_type}</span>
                             <p className="text-xs text-stone-400 font-mono">#{lead.id}</p>
                         </div>
                         

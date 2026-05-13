@@ -35,6 +35,32 @@
     @apply px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-widest border;
   }
   
-  .crm-tag-hot { @apply bg-orange-50 text-orange-700 border-orange-100; }
-  .crm-tag-warm { @apply bg-stone-100 text-stone-700 border-stone-200; }
+  .crm-tag-hot { @apply bg-red-50 text-red-700 border-red-100; }
+  .crm-tag-warm { @apply bg-orange-50 text-orange-700 border-orange-100; }
+  .crm-tag-cold { @apply bg-blue-50 text-blue-700 border-blue-100; }
+
+  /* The "Subtle Header" - Used for labels above inputs or section titles */
+  .crm-section-title {
+    @apply text-[10px] text-stone-400 uppercase font-bold tracking-[0.2em] mb-2;
+  }
+
+  /* Secondary Button - For 'Cancel' or 'Back' actions */
+  .crm-btn-secondary {
+    @apply text-stone-400 hover:text-stone-800 text-xs font-bold uppercase tracking-widest transition-all duration-200;
+  }
+
+  /* The Glass/Blur Overlay - Perfect for your Reminder Popups */
+  .crm-overlay {
+    @apply bg-white/80 backdrop-blur-md border border-stone-200 shadow-2xl rounded-xl p-4;
+  }
+
+  /* Animations for the Popups/Alerts */
+  .animate-slide-in {
+    animation: slideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @keyframes slideIn {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
 }

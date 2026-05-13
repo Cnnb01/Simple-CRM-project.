@@ -5,13 +5,15 @@ import AddLead from "./components/AddLead";
 import ViewLead from "./components/ViewLead";
 import ReminderPopup from "./components/ReminderPopup";
 import { ReminderProvider } from "./context/ReminderContext";
-// const isAuthenticated = () => !!localStorage.getItem("access_token");
-function App() {
-  return (
-      <>
-      <ReminderProvider>
-      <Router>
-        <ReminderPopup />
+import NavBar from "./components/NavBar";
+import { useLocation } from "react-router-dom";
+
+const AppContent = () =>{
+  const location = useLocation();
+  return(
+    <>
+      {location.pathname !== "/login" && <NavBar/>}
+      <ReminderPopup />
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<Navigate to="/dashboard" />} />
@@ -21,6 +23,15 @@ function App() {
           {/* 404 - Not Found */}
           <Route path="*" element={<div className="p-10">404 - Page Not Found</div>} />
         </Routes>
+    </>
+  )
+}
+function App() {
+  return (
+      <>
+      <ReminderProvider>
+      <Router>
+        <AppContent />
       </Router>
       </ReminderProvider>
       </>

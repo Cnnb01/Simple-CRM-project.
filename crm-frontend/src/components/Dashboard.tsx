@@ -9,6 +9,10 @@ const Dashboard: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(true)
 
     useEffect(()=>{
+        if(!localStorage.getItem("access_token")) {
+            navigate("/login")
+            return
+        }
         const fetchLeads = async () => {
             try {
                 const resp = await api.get("leads/")
@@ -27,7 +31,7 @@ const Dashboard: React.FC = () => {
     return(
         <div className="min-h-screen bg-[#fcfaf7] p-8">
             <header className="max-w-6xl mx-auto mb-10 flex justify-between items-end">
-                <div>
+                <div> 
                     <h1 className="text-4xl font-serif text-stone-800">Lead Registry</h1>
                     <p className="text-stone-500 mt-2 italic">Curated relationships and opportunities.</p>
                 </div>

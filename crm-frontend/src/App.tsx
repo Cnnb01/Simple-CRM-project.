@@ -22,7 +22,6 @@ const AppContent = () =>{
           <Route path="/add-lead" element={<AddLead />} />
           <Route path="/leads/:id" element={<ViewLead />} />
           <Route path="/edit-lead/:id" element={<EditLead />} />
-          {/* 404 - Not Found */}
           <Route path="*" element={<div className="p-10">404 - Page Not Found</div>} />
         </Routes>
     </>

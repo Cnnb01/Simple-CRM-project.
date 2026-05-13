@@ -32,7 +32,7 @@ export const ReminderProvider: React.FC<{children:React.ReactNode}> = ({children
 
     const dismissAlert = async(id:number)=>{
         try {
-            await api.patch(`leads/reminders/${id}`, {is_acknowledged: true})
+            await api.patch(`leads/reminders/${id}/`, {is_acknowledged: true})
             setAlerts(prev=>prev.filter(alert=> alert.id !== id))
         } catch (error) {
             console.error("Failed to dismiss alert:", error)

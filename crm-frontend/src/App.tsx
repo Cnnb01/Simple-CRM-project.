@@ -7,6 +7,7 @@ import ReminderPopup from "./components/ReminderPopup";
 import { ReminderProvider } from "./context/ReminderContext";
 import NavBar from "./components/NavBar";
 import { useLocation } from "react-router-dom";
+import EditLead from "./components/EditLead";
 
 const AppContent = () =>{
   const location = useLocation();
@@ -20,6 +21,7 @@ const AppContent = () =>{
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/add-lead" element={<AddLead />} />
           <Route path="/leads/:id" element={<ViewLead />} />
+          <Route path="/edit-lead/:id" element={<EditLead />} />
           {/* 404 - Not Found */}
           <Route path="*" element={<div className="p-10">404 - Page Not Found</div>} />
         </Routes>

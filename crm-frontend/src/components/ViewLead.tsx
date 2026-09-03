@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import api from "../api/axios";
 import type { Lead } from "../types";
+import { useReminders } from "../context/ReminderContext";
 
 const ViewLead = () => {
     const { id } = useParams<{ id: string }>();
@@ -12,6 +13,7 @@ const ViewLead = () => {
     const [remDate, setRemDate] = useState("")
     const [remTime, setRemTime] = useState("")
     const navigate = useNavigate()
+    const { lastUpdated } = useReminders()
 
     useEffect(() => {
         const fetchLead = async () => {
@@ -24,7 +26,7 @@ const ViewLead = () => {
             }
         };
         fetchLead();
-    }, [id]);
+    }, [id, lastUpdated]);
 
     const handleAddReminder = async(e: React.FormEvent)=>{
         e.preventDefault()

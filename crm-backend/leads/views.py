@@ -4,9 +4,9 @@ from .serializers import LeadSerializer, NotesSerializer, ContactSerializer, Rem
 from rest_framework import generics, permissions, filters
 from .permissions import IsManagerOrReadOnly
 from django_filters.rest_framework import DjangoFilterBackend
-
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 # Create your views here.
 # manager to leads get, post, delete(RetrieveUpdateDestroyAPIView)
 # agents to leads get, post(RetrieveUpdateAPIView)
@@ -117,10 +117,11 @@ class ReminderDetail(generics.RetrieveUpdateDestroyAPIView):
         return Reminder.objects.filter(lead__created_by=user)
     
 @api_view(['GET']) #used to convert Python functions into API views.
+@permission_classes([IsAuthenticated])
 def get_unread_reminders(request):
     user = request.user
     reminders = Reminder.objects.filter(
-        lead__created_by=user,
+        created_by=user, #who created the reminder
         is_sent=True,
         is_acknowledged=False
     )

@@ -42,6 +42,7 @@ export interface Reminder {
     id: number;
     message: string;
     lead_id: number;
+    lead_name: string;
     created_by: string;
     reminder_time: string;
     is_sent: boolean;

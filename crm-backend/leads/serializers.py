@@ -14,10 +14,11 @@ class ContactSerializer(serializers.ModelSerializer):
         read_only_fields = ['created_by']
 
 class ReminderSerializer(serializers.ModelSerializer):
+    lead_name = serializers.ReadOnlyField(source='lead.lead_name')
     class Meta:
         model = Reminder
         fields = [
-            'id', 'lead', 'date', 'reminder_time', 
+            'id', 'lead', 'lead_name', 'date', 'reminder_time', 
             'message', 'is_sent', 'is_acknowledged','created_by'
         ]
         read_only_fields = ['created_by',]

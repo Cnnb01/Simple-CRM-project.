@@ -49,7 +49,6 @@ const ViewLead = () => {
         setRemTime("")
         } catch (error) {
             console.error("Failed to save reminder:", error)  
- 
         }
     }
     if (!lead) return (

@@ -35,7 +35,7 @@ const ViewLead = () => {
             message: remMsg,
             date: remDate,
             reminder_time: remTime,
-            lead: id
+            lead: Number(id)
         })
         console.log("reminder data sent to the backeend is: ",req.data)
         if(lead){
@@ -60,7 +60,7 @@ const ViewLead = () => {
     const handleAddNote = async(e: React.FormEvent)=>{
         e.preventDefault()
         try {
-            const req = await api.post(`leads/notes/`, {content:noteContent,lead:id})
+            const req = await api.post(`leads/notes/`, {content:noteContent,lead:Number(id)})
             console.log("posted the note",req)
             if(lead){
                 setLead({
@@ -78,7 +78,7 @@ const ViewLead = () => {
     const handleAddContact = async(e: React.FormEvent)=>{
         e.preventDefault()
         try {
-            const req = await api.post(`leads/contacts/`,{phone_number:phone, lead:id})
+            const req = await api.post(`leads/contacts/`,{phone_number:phone, lead:Number(id)})
             console.log("posted the phone number", req)
             if(lead){
                 setLead({
@@ -87,8 +87,8 @@ const ViewLead = () => {
                 })
             }
             setPhone("")
-        } catch (error) {
-            console.error("Failed to save phone number:", error)  
+        } catch (error:any) {
+            console.error("Failed to save phone number:", error.response.data)  
         }
     }
 
@@ -296,7 +296,7 @@ const ViewLead = () => {
 
                         {/* account's extra data */}
                         <div className="bg-stone-800 text-stone-100 rounded-lg p-6 shadow-md">
-                            <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] mb-4 text-stone-400">Account metadata</h3>
+                            <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] mb-4 text-stone-400">Lead Owner</h3>
                             <div className="space-y-4">
                                 <div>
                                     <span className="text-[10px] text-stone-500 uppercase font-bold">Assigned To</span>

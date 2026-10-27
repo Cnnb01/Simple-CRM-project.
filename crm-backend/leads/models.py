@@ -36,7 +36,7 @@ class Notes(models.Model):
 class Contact(models.Model):
     lead = models.ForeignKey(Lead, on_delete=models.CASCADE, related_name='contacts')
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    phone_number = models.CharField(max_length=12)
+    phone_number = models.CharField(max_length=13)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
